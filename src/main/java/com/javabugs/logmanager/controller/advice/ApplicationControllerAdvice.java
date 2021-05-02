@@ -32,16 +32,12 @@ public class ApplicationControllerAdvice {
         return errors;
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(LogConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public List<String> handleConstraintViolationException(ConstraintViolationException ex) {
-        Throwable cause = ex.getCause();
-        ConstraintViolationException consEx = (ConstraintViolationException) cause;
-        final List<String> errors = new ArrayList<String>();
-        for (final ConstraintViolation<?> violation : consEx.getConstraintViolations()) {
-            errors.add(violation.getPropertyPath() + ": " + violation.getMessage());
-        }
+    public Map<String, String> handleConstraintViolationException(LogConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
         return errors;
     }
 

@@ -5,6 +5,8 @@ import com.javabugs.logmanager.repository.LogRepository;
 import com.javabugs.logmanager.service.interfaces.LogService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LogImpl implements LogService {
 
@@ -14,11 +16,14 @@ public class LogImpl implements LogService {
         this.logRepository = logRepository;
     }
 
-
-
     @Override
     public void save(Log log) {
         logRepository.save(log);
+    }
+
+    @Override
+    public List<Log> findAll() {
+        return logRepository.findAll();
     }
 
 }
