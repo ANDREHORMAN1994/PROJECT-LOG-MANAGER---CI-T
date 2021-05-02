@@ -26,4 +26,32 @@ public class LogImpl implements LogService {
         return logRepository.findAll();
     }
 
+    @Override
+    public List<Log> findByDate(String filter) {
+        return logRepository.findByDate(filter);
+    }
+    @Override
+    public List<Log> findByDescription(String filter) {
+        return logRepository.findByDescription(filter);
+    }
+
+    @Override
+    public List<Log> findByEvent(String filter) {
+        return logRepository.findByEvent(filter);
+    }
+
+    @Override
+    public List<Log> findByQuantity(String filter) {
+        return logRepository.findByQuantity(filter);
+    }
+
+    @Override
+    public List<Log> findByLevel(String filter) {
+        return logRepository.findByLevel(filter);
+    }
+
+    @Override
+    public List<Log> findByOrigin(String filter) {
+        return logRepository.findByOrigin(filter);
+    }
 }
