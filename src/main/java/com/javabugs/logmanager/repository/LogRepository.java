@@ -23,7 +23,7 @@ public interface LogRepository extends CrudRepository<Log, Long> {
     public List<Log> findByEvent(@Param("filter") String filter);
 
     @Query(value = "SELECT * FROM log WHERE quantity = :filter", nativeQuery = true)
-    public List<Log> findByQuantity(@Param("filter") String filter);
+    public List<Log> findByQuantity(@Param("filter") Integer filter);
 
     @Query(value = "SELECT * FROM log WHERE level = :filter", nativeQuery = true)
     public List<Log>findByLevel(@Param("filter") String filter);

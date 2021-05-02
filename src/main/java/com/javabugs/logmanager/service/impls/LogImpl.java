@@ -41,7 +41,7 @@ public class LogImpl implements LogService {
     }
 
     @Override
-    public List<Log> findByQuantity(String filter) {
+    public List<Log> findByQuantity(Integer filter) {
         return logRepository.findByQuantity(filter);
     }
 
