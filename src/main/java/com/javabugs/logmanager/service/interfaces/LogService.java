@@ -11,10 +11,6 @@ public interface LogService {
 
     List<Log> findAll();
 
-    Log findByField(Date date || );
-
-
-
 }
 
 

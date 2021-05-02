@@ -37,15 +37,7 @@ public class LogController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LogDTO>> getAllLogs(
-            @RequestParam(required = false) Date date,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String event,
-            @RequestParam(required = false) Integer quantity,
-            @RequestParam(required = false) String level,
-            @RequestParam(required = false) String origin) {
-        if ()
-
+    public ResponseEntity<List<LogDTO>> getAllLogs() {
         List<Log> result = this.logService.findAll();
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
