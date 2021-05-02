@@ -13,8 +13,8 @@ public interface LogService {
     List<Log> findByDescription(String filter);
     List<Log> findByEvent(String filter);
     List<Log> findByQuantity(String filter);
-    List<Log>findByLevel(String filter);
-    List<Log>findByOrigin(String filter);
+    List<Log> findByLevel(String filter);
+    List<Log> findByOrigin(String filter);
 }
 
 
