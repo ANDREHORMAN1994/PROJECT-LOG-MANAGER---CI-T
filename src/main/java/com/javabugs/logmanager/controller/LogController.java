@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +38,41 @@ public class LogController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LogDTO>> getAllLogs() {
-        List<Log> result = this.logService.findAll();
+    public ResponseEntity<List<LogDTO>> getAllLogs(
+            @RequestParam(required = false) String filterType,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String OrderBy) {
+
+        List<Log> result;
+        String filterTypeLowerCase = new String();
+
+        if (filterType != null) {
+            filterTypeLowerCase = filterType.toLowerCase();
+        }
+
+        switch (filterTypeLowerCase) {
+            case "date":
+                result = this.logService.findByDate(filter);
+                break;
+            case "description":
+                result = this.logService.findByDescription(filter);
+                break;
+            case "event":
+                result = this.logService.findByEvent(filter);
+                break;
+            case "quantity":
+                result = this.logService.findByQuantity(Integer.parseInt(filter));
+                break;
+            case "level":
+                result = this.logService.findByLevel(filter);
+                break;
+            case "origin":
+                result = this.logService.findByOrigin(filter);
+                break;
+            default:
+                result = this.logService.findAll();
+        }
+
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
 

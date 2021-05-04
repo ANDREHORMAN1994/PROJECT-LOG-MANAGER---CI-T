@@ -8,10 +8,6 @@ import java.util.List;
 
 @Repository
 public interface LevelRepository extends CrudRepository<Level, Long> {
-
     public List<Level> findAll();
-
-
     public Level findByName(String name);
-
 }
