@@ -6,6 +6,8 @@ import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.mappers.LogMapperImpl;
 import com.javabugs.logmanager.service.interfaces.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +43,8 @@ public class LogController {
     public ResponseEntity<List<LogDTO>> getAllLogs(
             @RequestParam(required = false) String filterType,
             @RequestParam(required = false) String filter,
-            @RequestParam(required = false) String OrderBy) {
+            @RequestParam(required = false) String OrderBy,
+            @RequestParam(required = true) Integer page) {
 
         List<Log> result;
         String filterTypeLowerCase = new String();
@@ -50,27 +53,29 @@ public class LogController {
             filterTypeLowerCase = filterType.toLowerCase();
         }
 
+        Pageable pageable = PageRequest.of(page -1, 3);
+
         switch (filterTypeLowerCase) {
             case "date":
-                result = this.logService.findByDate(filter);
+                result = this.logService.findByDate(filter, pageable);
                 break;
             case "description":
-                result = this.logService.findByDescription(filter);
+                result = this.logService.findByDescription(filter, pageable);
                 break;
             case "event":
-                result = this.logService.findByEvent(filter);
+                result = this.logService.findByEvent(filter, pageable);
                 break;
             case "quantity":
-                result = this.logService.findByQuantity(Integer.parseInt(filter));
+                result = this.logService.findByQuantity(Integer.parseInt(filter), pageable);
                 break;
             case "level":
-                result = this.logService.findByLevel(filter);
+                result = this.logService.findByLevel(filter, pageable);
                 break;
             case "origin":
-                result = this.logService.findByOrigin(filter);
+                result = this.logService.findByOrigin(filter, pageable);
                 break;
             default:
-                result = this.logService.findAll();
+                result = this.logService.findAll(pageable);
         }
 
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
