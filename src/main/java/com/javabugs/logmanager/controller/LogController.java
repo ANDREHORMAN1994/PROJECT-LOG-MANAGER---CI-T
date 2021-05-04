@@ -6,6 +6,8 @@ import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.mappers.LogMapperImpl;
 import com.javabugs.logmanager.service.interfaces.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -44,16 +47,19 @@ public class LogController {
             @RequestParam(required = false) String filterType,
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) String OrderBy,
-            @RequestParam(required = true) Integer page) {
+            @RequestParam(required = false) Integer size,
+            @RequestParam(required = false) Integer page) {
 
         List<Log> result;
         String filterTypeLowerCase = new String();
+        Integer sizeValue = size;
+        Integer pageValue = page;
 
-        if (filterType != null) {
-            filterTypeLowerCase = filterType.toLowerCase();
-        }
+        if (filterType != null) filterTypeLowerCase = filterType.toLowerCase();
+        if (size == null) sizeValue = 3;
+        if (page == null) pageValue = 1;
 
-        Pageable pageable = PageRequest.of(page -1, 3);
+        Pageable pageable = PageRequest.of(pageValue -1, sizeValue);
 
         switch (filterTypeLowerCase) {
             case "date":

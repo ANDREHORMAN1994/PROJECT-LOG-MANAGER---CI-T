@@ -19,5 +19,3 @@ public interface LogService {
     List<Log> findByOrigin(String filter, Pageable pageable);
 
 }
-
-
