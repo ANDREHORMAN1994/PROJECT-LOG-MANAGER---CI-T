@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface LogService {
+  
     void save(Log log);
     List<Log> findAll();
     List<Log> findByDate(String filter);
@@ -15,6 +16,7 @@ public interface LogService {
     List<Log> findByQuantity(Integer filter);
     List<Log> findByLevel(String filter);
     List<Log> findByOrigin(String filter);
+
 }
 
 

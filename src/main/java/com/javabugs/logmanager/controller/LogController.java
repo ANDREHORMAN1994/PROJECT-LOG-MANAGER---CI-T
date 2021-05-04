@@ -72,7 +72,7 @@ public class LogController {
             default:
                 result = this.logService.findAll();
         }
-        
+
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
 
