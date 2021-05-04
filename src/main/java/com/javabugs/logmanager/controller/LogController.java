@@ -42,8 +42,15 @@ public class LogController {
             @RequestParam(required = false) String filterType,
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) String OrderBy) {
-        List<Log> result = null;
-        switch (filterType.toLowerCase()) {
+
+        List<Log> result;
+        String filterTypeLowerCase = new String();
+
+        if (filterType != null) {
+            filterTypeLowerCase = filterType.toLowerCase();
+        }
+
+        switch (filterTypeLowerCase) {
             case "date":
                 result = this.logService.findByDate(filter);
                 break;
@@ -65,17 +72,6 @@ public class LogController {
             default:
                 result = this.logService.findAll();
         }
-
-        
-//        if (filterType != null && filter != null) {
-//            System.out.println(filterType);
-//            System.out.println(filter);
-//            if (filterType.equals("description")) {
-//                result = this.logService.findByDescription(filter);
-//            }
-//        } else {
-//            result = this.logService.findAll();
-//        }
         
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
