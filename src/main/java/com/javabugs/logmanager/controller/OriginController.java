@@ -15,12 +15,15 @@ import java.util.List;
 public class OriginController {
 
     private final OriginService originService;
+
     public OriginController(final OriginService originService) {
         this.originService = originService;
     }
+
     @GetMapping
     public ResponseEntity<List<Origin>> getAllOrigin() {
         List<Origin> result = this.originService.findAll();
         return new ResponseEntity<List<Origin>>(result, HttpStatus.OK);
     }
+
 }

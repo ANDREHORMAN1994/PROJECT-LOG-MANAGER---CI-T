@@ -15,9 +15,11 @@ import java.util.List;
 public class LevelController {
 
     private final LevelService levelService;
+
     public LevelController(final LevelService levelService) {
         this.levelService = levelService;
     }
+
     @GetMapping
     public ResponseEntity<List<Level>> getAllLevel() {
         List<Level> result = this.levelService.findAll();
