@@ -3,11 +3,11 @@ package com.javabugs.logmanager.service.impls;
 import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.repository.LogRepository;
 import com.javabugs.logmanager.service.interfaces.LogService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LogImpl implements LogService {
@@ -56,6 +56,11 @@ public class LogImpl implements LogService {
     @Override
     public List<Log> findByOrigin(final String filter, final Pageable pageable) {
         return logRepository.findByOrigin(filter, pageable);
+    }
+
+    @Override
+    public Optional<Log> findById(final Long id) {
+        return logRepository.findById(id);
     }
 
 }

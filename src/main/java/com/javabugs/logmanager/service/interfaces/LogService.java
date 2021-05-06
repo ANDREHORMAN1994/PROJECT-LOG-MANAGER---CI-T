@@ -2,10 +2,9 @@ package com.javabugs.logmanager.service.interfaces;
 
 import com.javabugs.logmanager.entity.Log;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface LogService {
   
@@ -17,5 +16,6 @@ public interface LogService {
     List<Log> findByQuantity(Integer filter, Pageable pageable);
     List<Log> findByLevel(String filter, Pageable pageable);
     List<Log> findByOrigin(String filter, Pageable pageable);
+    Optional<Log> findById(Long id);
 
 }
