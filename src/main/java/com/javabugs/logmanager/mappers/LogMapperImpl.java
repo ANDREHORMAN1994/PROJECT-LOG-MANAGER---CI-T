@@ -1,6 +1,5 @@
 package com.javabugs.logmanager.mappers;
 
-
 import com.javabugs.logmanager.dto.LogDTO;
 import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.service.interfaces.LevelService;

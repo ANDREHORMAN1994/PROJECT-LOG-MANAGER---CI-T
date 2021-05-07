@@ -7,6 +7,7 @@ import com.javabugs.logmanager.mappers.LogMapperImpl;
 import com.javabugs.logmanager.service.interfaces.LogService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,21 +69,26 @@ public class LogController {
     public ResponseEntity<List<LogDTO>> getAllLogs(
             @RequestParam(required = false) String filterType,
             @RequestParam(required = false) String filter,
-            @RequestParam(required = false) String OrderBy,
-            @RequestParam(required = false) Integer size,
-            @RequestParam(required = false) Integer page) {
+            @RequestParam(required = false) String orderField,
+            @RequestParam(defaultValue = "asc") String orderDir,
+            @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(defaultValue = "1") Integer page) {
 
         String filterTypeLowerCase = "";
-        Integer sizeValue = size;
-        Integer pageValue = page;
-
         if (filterType != null) filterTypeLowerCase = filterType.toLowerCase();
-        if (size == null) sizeValue = 5;
-        if (page == null) pageValue = 1;
 
-        Pageable pageable = PageRequest.of(pageValue -1, sizeValue);
+        Sort sort;
+        Pageable pageable;
+        if (orderField != null) {
+            sort = orderDir.equals("asc")
+                ? Sort.by(orderField).ascending()
+                : Sort.by(orderField).descending();
+            pageable = PageRequest.of(page -1, size, sort);
+        } else {
+            pageable = PageRequest.of(page -1, size);
+        }
+
         List<Log> result = filterType(filterTypeLowerCase, filter, pageable);
-
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
 
