@@ -38,26 +38,26 @@ public class LogController {
         return new ResponseEntity<LogDTO>(logMapper.toLogDTO(log), HttpStatus.CREATED);
     }
 
-    public List<Log> filterType(String filterTypeLowerCase, String filter, Pageable pageable) {
+    public List<Log> filterType(String filterTypeLowerCase, String filterValue, Pageable pageable) {
         List<Log> result;
         switch (filterTypeLowerCase) {
             case "date":
-                result = this.logService.findByDate(filter, pageable);
+                result = this.logService.findByDate(filterValue, pageable);
                 break;
             case "description":
-                result = this.logService.findByDescription(filter, pageable);
+                result = this.logService.findByDescription(filterValue, pageable);
                 break;
             case "event":
-                result = this.logService.findByEvent(filter, pageable);
+                result = this.logService.findByEvent(filterValue, pageable);
                 break;
             case "quantity":
-                result = this.logService.findByQuantity(Integer.parseInt(filter), pageable);
+                result = this.logService.findByQuantity(Integer.parseInt(filterValue), pageable);
                 break;
             case "level":
-                result = this.logService.findByLevel(filter, pageable);
+                result = this.logService.findByLevel(filterValue, pageable);
                 break;
             case "origin":
-                result = this.logService.findByOrigin(filter, pageable);
+                result = this.logService.findByOrigin(filterValue, pageable);
                 break;
             default:
                 result = this.logService.findAll(pageable);
@@ -67,15 +67,15 @@ public class LogController {
 
     @GetMapping
     public ResponseEntity<List<LogDTO>> getAllLogs(
-            @RequestParam(required = false) String filterType,
-            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String filterField,
+            @RequestParam(required = false) String filterValue,
             @RequestParam(required = false) String orderField,
             @RequestParam(defaultValue = "asc") String orderDir,
             @RequestParam(defaultValue = "5") Integer size,
             @RequestParam(defaultValue = "1") Integer page) {
 
         String filterTypeLowerCase = "";
-        if (filterType != null) filterTypeLowerCase = filterType.toLowerCase();
+        if (filterField != null) filterTypeLowerCase = filterField.toLowerCase();
 
         Sort sort;
         Pageable pageable;
@@ -88,7 +88,7 @@ public class LogController {
             pageable = PageRequest.of(page -1, size);
         }
 
-        List<Log> result = filterType(filterTypeLowerCase, filter, pageable);
+        List<Log> result = filterType(filterTypeLowerCase, filterValue, pageable);
         return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
 
