@@ -57,7 +57,7 @@ cd PROJETO-LOG-MANAGER
 ![GET_ALL_LOGS_BY_FIELDS.gif](./images/GET_ALL_LOGS_BY_FIELDS.gif)
 
 #### Get all logs sort by date
-[![GET_ALL_LOGS_SORT_BY_DATE.gif](./images/GET_ALL_LOGS_SORT_BY_DATE.gif)
+![GET_ALL_LOGS_SORT_BY_DATE.gif](./images/GET_ALL_LOGS_SORT_BY_DATE.gif)
 
 #### Get all logs sort by description
 ![GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif](./images/GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif)
