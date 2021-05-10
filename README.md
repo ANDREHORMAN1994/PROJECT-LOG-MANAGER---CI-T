@@ -51,34 +51,34 @@ cd PROJETO-LOG-MANAGER
 ## Simulação
 
 #### Get all logs
-[![GET_ALL_LOGS.gif](./images/GET_ALL_LOGS.gif)
+![GET_ALL_LOGS.gif](./images/GET_ALL_LOGS.gif)
 
 #### Get all logs by fields
-[![GET_ALL_LOGS_BY_FIEDS.gif](./images/GET_ALL_LOGS_BY_FIEDS.gif)
+![GET_ALL_LOGS_BY_FIELDS.gif](./images/GET_ALL_LOGS_BY_FIELDS.gif)
 
 #### Get all logs sort by date
 [![GET_ALL_LOGS_SORT_BY_DATE.gif](./images/GET_ALL_LOGS_SORT_BY_DATE.gif)
 
 #### Get all logs sort by description
-[![GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif](./images/GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif)
+![GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif](./images/GET_ALL_LOGS_SORT_BY_DESCRIPTION.gif)
 
 #### Get all logs sort by id
-[![GET_ALL_LOGS_SORT_BY_ID.gif](./images/GET_ALL_LOGS_SORT_BY_ID.gif)
+![GET_ALL_LOGS_SORT_BY_ID.gif](./images/GET_ALL_LOGS_SORT_BY_ID.gif)
 
 #### Get by id
-[![GET_BY_ID_LOG.gif](./images/GET_BY_ID_LOG.gif)
+![GET_BY_ID_LOG.gif](./images/GET_BY_ID_LOG.gif)
 
 #### Get by page
-[![GET_BY_PAGE_LOGS.gif](./images/GET_BY_PAGE_LOGS.gif)
+![GET_BY_PAGE_LOGS.gif](./images/GET_BY_PAGE_LOGS.gif)
 
 #### Get by level
-[![GET_LEVEL.gif](./images/GET_LEVEL.gif)
+![GET_LEVEL.gif](./images/GET_LEVEL.gif)
 
 #### Get by origin
-[![GET_ORIGIN.gif](./images/GET_ORIGIN.gif)
+![GET_ORIGIN.gif](./images/GET_ORIGIN.gif)
 
 #### Post logs
-[![POST_LOGS.gif](./images/POST_LOGS.gif)
+![POST_LOGS.gif](./images/POST_LOGS.gif)
 
 
 
