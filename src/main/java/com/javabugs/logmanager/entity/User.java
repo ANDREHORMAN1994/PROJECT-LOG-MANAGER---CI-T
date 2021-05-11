@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -23,9 +24,11 @@ public class User implements UserDetails {
     private Long id;
 
     @Column
+    @NotEmpty
     private String login;
 
     @Column
+    @NotEmpty
     private String password;
 
     @Override

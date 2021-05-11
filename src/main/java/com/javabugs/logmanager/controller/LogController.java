@@ -5,6 +5,8 @@ import com.javabugs.logmanager.dto.LogDTO;
 import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.mappers.LogMapperImpl;
 import com.javabugs.logmanager.service.interfaces.LogService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +30,8 @@ public class LogController {
     }
 
     @PostMapping
+    @ApiOperation("Cria um Log de Erro")
+    @ApiResponse(code = 400, message = "Not possible create this Log")
     public ResponseEntity<LogDTO> createLog(@Valid @RequestBody LogDTO logDTO) {
         Log log = logMapper.toLog(logDTO);
 
@@ -66,6 +70,8 @@ public class LogController {
     }
 
     @GetMapping
+    @ApiOperation("Filtra todos Logs de Erro por campo")
+    @ApiResponse(code = 404, message = "Log Not Found")
     public ResponseEntity<List<LogDTO>> getAllLogs(
             @RequestParam(required = false) String filterField,
             @RequestParam(required = false) String filterValue,
@@ -93,6 +99,8 @@ public class LogController {
     }
 
     @GetMapping("{id}")
+    @ApiOperation("Filtra um Log de Erro pelo Id")
+    @ApiResponse(code = 404, message = "Log Not Found")
     public ResponseEntity<LogDTO> getLogById(@PathVariable("id") Long id) {
         Optional<Log> logOptional = logService.findById(id);
 

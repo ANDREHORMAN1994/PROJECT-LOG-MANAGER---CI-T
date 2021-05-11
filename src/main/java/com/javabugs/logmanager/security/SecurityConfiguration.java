@@ -18,8 +18,19 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableResourceServer
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final String[] endPointsToIgnore = {
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/level",
+            "/origin",
+    };
+
     @Autowired
-    private UserDetailsService userService;
+    private UserDetailsService userDetailsService;
 
     @Bean
     @Override
@@ -29,19 +40,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**",
-                "/level",
-                "/origin");
+        web.ignoring().antMatchers(endPointsToIgnore);
     }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userService).passwordEncoder(passwordEncoder());
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
