@@ -2,20 +2,23 @@ package com.javabugs.logmanager.controller;
 
 import com.javabugs.logmanager.controller.advice.LogException;
 import com.javabugs.logmanager.dto.LogDTO;
+import com.javabugs.logmanager.dto.LogWithoutEventDTO;
 import com.javabugs.logmanager.entity.Log;
 import com.javabugs.logmanager.mappers.LogMapperImpl;
 import com.javabugs.logmanager.service.interfaces.LogService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/log")
@@ -42,8 +45,8 @@ public class LogController {
         return new ResponseEntity<LogDTO>(logMapper.toLogDTO(log), HttpStatus.CREATED);
     }
 
-    public List<Log> filterType(String filterTypeLowerCase, String filterValue, Pageable pageable) {
-        List<Log> result;
+    public Page<Log> filterType(String filterTypeLowerCase, String filterValue, Pageable pageable) {
+        Page<Log> result;
         switch (filterTypeLowerCase) {
             case "date":
                 result = this.logService.findByDate(filterValue, pageable);
@@ -72,42 +75,34 @@ public class LogController {
     @GetMapping
     @ApiOperation("Filtra todos Logs de Erro por campo")
     @ApiResponse(code = 404, message = "Log Not Found")
-    public ResponseEntity<List<LogDTO>> getAllLogs(
+    public Page<LogWithoutEventDTO> getAllLogs(
             @RequestParam(required = false) String filterField,
             @RequestParam(required = false) String filterValue,
-            @RequestParam(required = false) String orderField,
-            @RequestParam(defaultValue = "asc") String orderDir,
-            @RequestParam(defaultValue = "5") Integer size,
-            @RequestParam(defaultValue = "1") Integer page) {
+            @PageableDefault(page = 0, size = 20, sort = "date", direction = Sort.Direction.DESC ) Pageable pageable) {
 
         String filterTypeLowerCase = "";
         if (filterField != null) filterTypeLowerCase = filterField.toLowerCase();
 
-        Sort sort;
-        Pageable pageable;
-        if (orderField != null) {
-            sort = orderDir.equals("asc")
-                ? Sort.by(orderField).ascending()
-                : Sort.by(orderField).descending();
-            pageable = PageRequest.of(page -1, size, sort);
-        } else {
-            pageable = PageRequest.of(page -1, size);
-        }
-
-        List<Log> result = filterType(filterTypeLowerCase, filterValue, pageable);
-        return new ResponseEntity<List<LogDTO>>(logMapper.toLogDTO(result), HttpStatus.OK);
+        Page<Log> logs = filterType(filterTypeLowerCase, filterValue, pageable);
+        Page<LogWithoutEventDTO> pageDTO = logs.map(new Function<Log, LogWithoutEventDTO>() {
+            @Override
+            public LogWithoutEventDTO apply(Log log) {
+                return logMapper.toLogWithoutEventDTO(log);
+            }
+        });
+        return pageDTO;
     }
 
     @GetMapping("{id}")
     @ApiOperation("Filtra um Log de Erro pelo Id")
     @ApiResponse(code = 404, message = "Log Not Found")
-    public ResponseEntity<LogDTO> getLogById(@PathVariable("id") Long id) {
+    public ResponseEntity<Log> getLogById(@PathVariable("id") Long id) {
         Optional<Log> logOptional = logService.findById(id);
 
         if (!logOptional.isPresent()) throw new LogException("Log not Found");
         Log result = logOptional.get();
 
-        return new ResponseEntity<LogDTO>(logMapper.toLogDTO(result), HttpStatus.OK);
+        return new ResponseEntity<Log>(result, HttpStatus.OK);
     }
 
 }
