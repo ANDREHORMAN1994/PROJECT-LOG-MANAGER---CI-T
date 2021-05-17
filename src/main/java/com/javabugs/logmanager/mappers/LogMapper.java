@@ -1,6 +1,7 @@
 package com.javabugs.logmanager.mappers;
 
 import com.javabugs.logmanager.dto.LogDTO;
+import com.javabugs.logmanager.dto.LogWithoutEventDTO;
 import com.javabugs.logmanager.entity.Log;
 
 import com.javabugs.logmanager.service.interfaces.LevelService;
@@ -34,6 +35,18 @@ abstract class LogMapper {
     }
     public abstract List<LogDTO> toLogDTO(Collection<Log> logs);
 
+    public LogWithoutEventDTO toLogWithoutEventDTO(Log log) {
+        LogWithoutEventDTO logDTO = new LogWithoutEventDTO();
+        logDTO.setId(log.getId());
+        logDTO.setDate(log.getDate());
+        logDTO.setDescription(log.getDescription());
+        logDTO.setQuantity(log.getQuantity());
+        logDTO.setLevel(log.getLevel().getName());
+        logDTO.setOrigin(log.getOrigin().getName());
+
+        return logDTO;
+    }
+
     public Log toLog(LogDTO logDTO) {
         Log log = new Log();
         log.setDate(logDTO.getDate());
@@ -44,5 +57,6 @@ abstract class LogMapper {
         log.setOrigin(this.originService.findByName(logDTO.getOrigin()));
         return log;
     }
+
     public abstract List<Log> toLog(Collection<LogDTO> logDTOs);
 }

@@ -1,37 +1,35 @@
 package com.javabugs.logmanager.repository;
 
 import com.javabugs.logmanager.entity.Log;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, Long> {
 
     @Query(value = "SELECT * FROM log", nativeQuery = true)
-    public List<Log> findAllDate(Pageable pageable);
+    Page<Log> findAllDate(Pageable pageable);
 
     @Query(value = "SELECT * FROM log WHERE date = :filter", nativeQuery = true)
-    public List<Log> findByDate(@Param("filter") String filter, Pageable pageable);
+    Page<Log> findByDate(@Param("filter") String filter, Pageable pageable);
 
     @Query(value = "SELECT * FROM log WHERE description = :filter", nativeQuery = true)
-    public List<Log> findByDescription(@Param("filter") String filter, Pageable pageable);
+    Page<Log> findByDescription(@Param("filter") String filter, Pageable pageable);
 
     @Query(value = "SELECT * FROM log WHERE event = :filter", nativeQuery = true)
-    public List<Log> findByEvent(@Param("filter") String filter, Pageable pageable);
+    Page<Log> findByEvent(@Param("filter") String filter, Pageable pageable);
 
     @Query(value = "SELECT * FROM log WHERE quantity = :filter", nativeQuery = true)
-    public List<Log> findByQuantity(@Param("filter") Integer filter, Pageable pageable);
+    Page<Log> findByQuantity(@Param("filter") Integer filter, Pageable pageable);
 
-    @Query(value = "SELECT * FROM log WHERE level = :filter", nativeQuery = true)
-    public List<Log>findByLevel(@Param("filter") String filter, Pageable pageable);
+    @Query(value = "SELECT * FROM log l INNER JOIN level le ON l.level_id = le.id WHERE le.name = :filter", nativeQuery = true)
+    Page<Log>findByLevel(@Param("filter") String filter, Pageable pageable);
 
-    @Query(value = "SELECT * FROM log WHERE origin = :filter", nativeQuery = true)
-    public List<Log>findByOrigin(@Param("filter") String filter, Pageable pageable);
+    @Query(value = "SELECT l.* FROM log l INNER JOIN origin o ON l.origin_id = o.id WHERE o.name = :filter", nativeQuery = true)
+    Page<Log>findByOrigin(@Param("filter") String filter, Pageable pageable);
 
 }
