@@ -30,11 +30,11 @@ Essa aplicação backend, em Java, foi pensada de modo que os endpoints criados 
 ## Preparando ambiente
 
 ```javascript
+sudo apt install maven
 git clone git@github.com:ANDREHORMAN1994/PROJETO-LOG-MANAGER.git
 cd PROJETO-LOG-MANAGER
-
-
-...
+mvn clean install
+mvn spring-boot:run
 ```
 
 ## Recursos
