@@ -96,13 +96,13 @@ public class LogController {
     @GetMapping("{id}")
     @ApiOperation("Filtra um Log de Erro pelo Id")
     @ApiResponse(code = 404, message = "Log Not Found")
-    public ResponseEntity<Log> getLogById(@PathVariable("id") Long id) {
+    public ResponseEntity<LogDTO> getLogById(@PathVariable("id") Long id) {
         Optional<Log> logOptional = logService.findById(id);
 
         if (!logOptional.isPresent()) throw new LogException("Log not Found");
         Log result = logOptional.get();
 
-        return new ResponseEntity<Log>(result, HttpStatus.OK);
+        return new ResponseEntity<LogDTO>(logMapper.toLogDTO(result), HttpStatus.OK);
     }
 
 }
